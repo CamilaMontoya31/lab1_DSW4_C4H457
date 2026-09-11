@@ -19,18 +19,18 @@ public class AirplaneController {
         this.airplaneBusiness = peliculaBusiness;
     }
 
-    @RequestMapping(value = "/findAirplanes", method = RequestMethod.GET )
+    @RequestMapping(method = RequestMethod.GET )
     public String iniciar(Model model){
         return "ver_tipos_avion";
 
     }
 
-    @RequestMapping(value = "/findAirplanes", method = RequestMethod.POST )
+    @RequestMapping(method = RequestMethod.POST )
     public String iniciar(Model model, @RequestParam("typeId") int typeId){
-        model.addAttribute("airplanes", airplaneBusiness.getAirplaneByType(typeId));
+        model.addAttribute("airplanesTypes", airplaneBusiness.getAirplaneByType(typeId));
         return "ver_tipos_avion";
     }
-    /*Método buscarPorTipo(Model model, @RequestParam("idTipo") int idTipo):
+    /*Método buscarPorTipo:
      Obtiene los aviones asociados al identificador que recibe. Agrega al modelo la
       lista de aviones resultantes y la instancia del AirplaneType seleccionado,
        haciendo un forward a la vista mostrar_aviones.html.

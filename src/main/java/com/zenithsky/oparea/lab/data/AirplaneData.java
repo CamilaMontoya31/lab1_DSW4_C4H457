@@ -15,11 +15,14 @@ import java.util.Map;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Repository;
+
 
 import com.zenithsky.oparea.lab.domain.Airline;
 import com.zenithsky.oparea.lab.domain.Airplane;
 import com.zenithsky.oparea.lab.domain.AirplaneType;
 
+@Repository
 public class AirplaneData{
 
     private final JdbcTemplate jdbcTemplate;

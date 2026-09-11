@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTP-8">
+    <title> Cami Airplanes </title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            Tipos de aviones
+        </h1>
+        <form action="#" th:action="@{/ver_tipos_avion}" method="post">
+            Tipo de Avión: <input type="text" , name="tipo" /> <br>
+            //aqui poner -traer el nombre del tipo de avion-
+        
+          
+             <input type="submit" , value="Otra Consulta" /> <br>
+
+        </form><br>
+        <table>
+            <tr>
+                <th>ID aeronave</th>
+                <th>Capacidad pasajeros</th>
+                <th>Nombre Aerolínea</th>
+               
+            </tr>
+            <tr th:each="airplane|airplaneStat : ${airplanes}">
+                <td><span th:text="${airplane.airplaneId}"></span></td>
+                <td><span th:text="${airplane.identifier}"></span></td>
+                <td><span th:text="${airplane.description}"></span></td>
+               
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
