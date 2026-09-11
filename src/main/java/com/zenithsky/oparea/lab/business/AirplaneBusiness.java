@@ -5,11 +5,13 @@ import java.util.List;
 import com.zenithsky.oparea.lab.data.AirplaneData;
 import com.zenithsky.oparea.lab.domain.Airplane;
 
+
 public class AirplaneBusiness {
 
-    private AirplaneData airplaneData;
+    private final AirplaneData airplaneData;
 
-    public AirplaneBusiness(AirplaneData airplaneData) {
+   
+    public AirplaneBusiness(AirplaneData airplaneData){
         this.airplaneData = airplaneData;
     }
 

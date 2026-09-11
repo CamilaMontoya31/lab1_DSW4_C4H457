@@ -1,6 +1,5 @@
 package com.zenithsky.oparea.lab.domain;
 
-import com.zenithsky.oparea.lab.domain.AirplaneType;
 
 public class Airplane{
 

@@ -1,12 +1,12 @@
 package com.zenithsky.oparea.lab.business;
 
-
+import org.springframework.stereotype.Service;
 import com.zenithsky.oparea.lab.domain.AirplaneType;
-
+import com.zenithsky.oparea.lab.data.AirplaneTypeData;
 import java.util.List;
 
-import com.zenithsky.oparea.lab.data.AirplaneTypeData;
 
+@Service
 public class AirplaneTypeBusiness{
 
     private final AirplaneTypeData airplaneTypeData;
@@ -15,8 +15,8 @@ public class AirplaneTypeBusiness{
         this.airplaneTypeData = airplaneTypeData;
     }
 
-    public List<AirplaneType> getAirplaneTypes(int typeId){
-        return airplaneTypeData.findAirplanesByTypeId(typeId);
+    public List<AirplaneType> getAirplaneTypes(){
+        return airplaneTypeData.findAll();
     }
 }
 

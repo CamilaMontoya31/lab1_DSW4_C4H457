@@ -7,7 +7,7 @@ public class Airline{
     private String airlineName;
     private String baseAirport; // aquí en el futuro se puede cambiar a un objeto de tipo Airport
 
-    Airline(){
+    public Airline(){
 
     }
 

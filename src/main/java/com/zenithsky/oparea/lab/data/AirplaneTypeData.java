@@ -1,3 +1,5 @@
+package com.zenithsky.oparea.lab.data;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class AirplaneTypeData {
 
 
 //TO DO fix this
-class AirlineTypeExtractor implements ResultSetExtractor<List<AirplaneType>> {
+class AirplaneTypeExtractor implements ResultSetExtractor<List<AirplaneType>> {
 
     @Override
     public List<AirplaneType> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -53,18 +55,16 @@ class AirlineTypeExtractor implements ResultSetExtractor<List<AirplaneType>> {
 
             airlineType = new AirplaneType();
             airlineType.setTypeId(typeId);
-            airlineType.setIdentifier(rs.getString(rs.getString("identifier")));
-            airlineType.setDescription(rs.getString(rs.getString("description")));
+            airlineType.setIdentifier(rs.getString("identifier"));
+            airlineType.setDescription(rs.getString("description"));
 
-
-           // airlineType.setDescription(rs.getString("descr"));
            
             map.put(typeId,airlineType);
 
            } 
            }//while
         
-        return new ArrayList<AirlineType>(map.values());
+        return new ArrayList<AirplaneType>(map.values());
     }
 
 

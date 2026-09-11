@@ -2,16 +2,29 @@
  colección de objetos Airplane asociados a dicho tipo con todos sus
   datos.  Es obligagorio utilizar la clase JdbcTemplate y 
   ResultSetExtractor. */
+  
+package com.zenithsky.oparea.lab.data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+
+import com.zenithsky.oparea.lab.domain.Airline;
 import com.zenithsky.oparea.lab.domain.Airplane;
+import com.zenithsky.oparea.lab.domain.AirplaneType;
 
 public class AirplaneData{
 
     private final JdbcTemplate jdbcTemplate;
 
-    PeliculaData(JdbcTemplate jdbcTemplate) {
+    AirplaneData(JdbcTemplate jdbcTemplate) {
       this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -34,14 +47,8 @@ public class AirplaneData{
                     ON a.airline_id = al.airline_id
                 WHERE a.type_id = ?
                 """;
-                title = title.toLowerCase();
-                genre = genre.toLowerCase();
-
-            //esto es para pasarle el titulo y genero
-                String titleLike = (title == null || title == "" ? "" : "%" +title.trim() +"%");
-                String genreLike = (genre == null || genre == "" ? "" : "%" +genre.trim()+"%");
-
-                return jdbcTemplate.query(sqlSelect,new PeliculaExtractor(), titleLike, genreLike);
+                typeId = typeId == 0 ? 1 : typeId; //esto es para pasarle el id y el identifier que es el nombre
+                return jdbcTemplate.query(sqlSelect,new AirplaneExtractor(), typeId);
 
     }
 }
@@ -56,42 +63,45 @@ class AirplaneExtractor implements ResultSetExtractor<List<Airplane>> {
         Airplane airplane = null;
 
         while(rs.next()){ //le pregunta al ResultSet si tiene registros por recorrer
-           int peliculaId = rs.getInt("airplane_id");
+           int airplaneId = rs.getInt("airplane_id");
            airplane = map.get(airplaneId);
 
            if (airplane == null) {
             airplane = new Airplane();
-            airplane.setAirlineId(airplaneId);
-            airplane.setTitulo(rs.getString("titulo"));
-            
+
+            airplane.setAirplaneId(airplaneId);
+            airplane.setCapacity(rs.getInt("capacity"));
+            airplane.setAirlineId(rs.getString("airline_id"));
+
             //pasar este a Airline
-            Airline airline = new Airline();
-            airline.setGeneroId(rs.getInt("genero_id"));
-            airline.setNombreGenero(rs.getString("nombre_genero"));
+            if(rs.getString("airline_id") != null) {
+                Airline airline = new Airline();
+                airline.setAirlineId(rs.getInt("airline_id"));
+                airline.setIata(rs.getString("iata"));
+                airline.setAirlineName(rs.getString("airlinename"));
+                airline.setBaseAirport(rs.getString("base_airport"));
+                airplane.setAirline(airline);
+            }
+
+ 
             
             //pasar este a AirplaneType
-            AirplaneType genero = new AirplaneType();
-            genero.setGeneroId(rs.getInt("genero_id"));
-            genero.setNombreGenero(rs.getString("nombre_genero"));
-            
-            pelicula.setGenero(genero);
-            pelicula.setSubtitulada(rs.getBoolean("subtitulada"));
-            pelicula.setEstreno(rs.getBoolean("estreno"));
-            map.put(peliculaId,pelicula);
+            if(rs.getString("type_id") != null) {
+                AirplaneType airplaneType = new AirplaneType();
+                airplaneType.setTypeId(rs.getInt("type_id"));
+                airplaneType.setIdentifier(rs.getString("identifier"));
+                airplaneType.setDescription(rs.getString("description"));
+                airplane.setAirplaneType(airplaneType);
+            }
+           
+            map.put(airplaneId,airplane);
 
            } //if
-           int actorId = rs.getInt("actor_id");
            
-           if(actorId > 0){
-            Actor actor = new Actor();
-            actor.setActorId(actorId);
-            actor.setNombreActor(rs.getString("nombre_actor"));
-            actor.setApellidosActor(rs.getString("apellidos_actor"));
-            
-            pelicula.getActores().add(actor);//ojo
-           }
+           
+       
         }//while
-        return new ArrayList<Pelicula>(map.values());
+        return new ArrayList<Airplane>(map.values());
     }
     
 }
