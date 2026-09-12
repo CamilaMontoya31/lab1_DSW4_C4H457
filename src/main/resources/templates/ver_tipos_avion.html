@@ -9,26 +9,21 @@
 
 <body>
     <div class="container">
-        <h1>
-            Buscador de Tipos de Aviones
-        </h1>
-        <form action="#" th:action="@{/ver_tipos_avion}" method="post">
-            Tipo de Avión (ID): <input type="text" , name="tipo" /> <br>
-        
-            <input type="submit" , value="Buscar" /> <br>
-
-        </form><br>
+        <h1> Lista Tipos de Aviones</h1>
+       
         <table>
-            <tr>
+             <thead>
+               <tr>
                 <th>Código Tipo</th>
                 <th>Identificador</th>
                 <th>Descripción</th>
-               
-            </tr>
-            <tr th:each="airplane,airplaneStat : ${airplanes}">
-                <td><span th:text="${airplane.airplaneId}"></span><a href="/mostrar_aviones">Texto del enlace</a></td>
-                <td><span th:text="${airplane.identifier}"></span></td>
-                <td><span th:text="${airplane.description}"></span></td>
+               </tr> 
+             </thead>
+            
+            <tr th:each="airplaneType : ${airplanesTypes}">
+                <td><span th:text="${airplaneType.airplaneId}"></span><a href="/mostrar_aviones">Texto del enlace</a></td>
+                <td><span th:text="${airplaneType.identifier}"></span></td>
+                <td><span th:text="${airplaneType.description}"></span></td>
                
             </tr>
         </table>
