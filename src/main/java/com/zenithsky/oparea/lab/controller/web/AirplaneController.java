@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zenithsky.oparea.lab.business.AirplaneBusiness;
 import com.zenithsky.oparea.lab.business.AirplaneTypeBusiness;
@@ -33,7 +33,7 @@ public class AirplaneController {
     public String iniciar(Model model, @RequestParam("typeId") int typeId){
 
         // agregar al Model con un nombre (atributo)
-        model.addAttribute("airplanesTypes", airplaneTypeBusiness.getAirplaneByType(typeId));// obtiener los datos de la BD
+        model.addAttribute("airplanesTypes", airplaneTypeBusiness.getAirplaneTypes());// obtener los datos de la BD
 
         return "ver_tipos_avion";
     }
