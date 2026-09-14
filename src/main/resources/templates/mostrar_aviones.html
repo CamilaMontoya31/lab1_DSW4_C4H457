@@ -2,39 +2,69 @@
 <html>
 
 <head>
-    <meta charset="UTP-8">
-    <title> Cami Airplanes </title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <title>Cami Airplanes</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 
 <body>
-    <div class="container">
-        <h1>
-            Tipos de aviones
-        </h1>
-        <form action="#" th:action="@{/ver_tipos_avion}" method="post">
-            Tipo de Avión: <input type="text" , name="tipo" /> <br>
-            //aqui poner -traer el nombre del tipo de avion-
-        
-          
-             <input type="submit" , value="Otra Consulta" /> <br>
 
-        </form><br>
-        <table>
-            <tr>
-                <th>ID aeronave</th>
-                <th>Capacidad pasajeros</th>
-                <th>Nombre Aerolínea</th>
-               
-            </tr>
-            <tr th:each="airplane|airplaneStat : ${airplanes}">
-                <td><span th:text="${airplane.airplaneId}"></span></td>
-                <td><span th:text="${airplane.identifier}"></span></td>
-                <td><span th:text="${airplane.description}"></span></td>
-               
-            </tr>
-        </table>
+<div class="container">
+
+    <h1>Lista de Aviones</h1>
+    <div th:if="${aviones == null or #lists.isEmpty(aviones)}">
+        <p>El tipo de avión seleccionado no tiene aeronaves asociadas</p>
     </div>
+    <table>
+
+        <thead>
+        <tr>
+            <th>ID aeronave</th>
+            <th>Capacidad pasajeros</th>
+            <th>Aerolínea</th>
+            <th>Tipo de avión</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="airplane : ${aviones}">
+
+            <!-- ID del avión -->
+            <td th:text="${airplane.airplaneId}">
+                ID
+            </td>
+
+            <!-- Capacidad -->
+            <td th:text="${airplane.capacity}">
+                Capacidad
+            </td>
+
+            <!-- Nombre de la aerolínea -->
+            <td th:text="${airplane.airline.airlineName}">
+                Aerolínea
+            </td>
+
+            <!-- Identificador del tipo de avión -->
+            <td th:text="${airplane.airplaneType.identifier}">
+                Tipo
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+<!--/ver_tipos_avion -->
+    <a th:href="@{/}">
+        Volver a tipos de aviones
+    </a>
+
+</div>
+
 </body>
 
 </html>
+

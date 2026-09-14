@@ -59,52 +59,71 @@ public class AirplaneData{
 
 class AirplaneExtractor implements ResultSetExtractor<List<Airplane>> {
 
-    @Override
-    public List<Airplane> extractData(ResultSet rs) throws SQLException, DataAccessException {
-        // este metodo es implementado
-        Map<Integer,Airplane> map = new HashMap<>();
-        Airplane airplane = null;
+    public List<Airplane> extractData(
+            ResultSet rs) throws SQLException, DataAccessException {
 
-        while(rs.next()){ //le pregunta al ResultSet si tiene registros por recorrer
-           int airplaneId = rs.getInt("airplane_id");
-           airplane = map.get(airplaneId);
+        Map<Integer, Airplane> map = new HashMap<>();
 
-           if (airplane == null) {
-            airplane = new Airplane();
+        while (rs.next()) {
 
-            airplane.setAirplaneId(airplaneId);
-            airplane.setCapacity(rs.getInt("capacity"));
-            airplane.setAirlineId(rs.getString("airline_id"));
+            int airplaneId = rs.getInt("airplane_id");
 
-            //pasar este a Airline
-            if(rs.getString("airline_id") != null) {
-                Airline airline = new Airline();
-                airline.setAirlineId(rs.getInt("airline_id"));
-                airline.setIata(rs.getString("iata"));
-                airline.setAirlineName(rs.getString("airlinename"));
-                airline.setBaseAirport(rs.getString("base_airport"));
-                airplane.setAirline(airline);
-            }
+            Airplane airplane = map.get(airplaneId);
 
- 
-            
-            //pasar este a AirplaneType
-            if(rs.getString("type_id") != null) {
+            if (airplane == null) {
+
+                airplane = new Airplane();
+
+                // Datos del avión
+                airplane.setAirplaneId(airplaneId);
+                airplane.setCapacity(rs.getInt("capacity"));
+                airplane.setAirlineId(rs.getString("airline_id"));
+
+                // Datos de la aerolínea
+                if (rs.getObject("airline_id") != null) {
+
+                    Airline airline = new Airline();
+
+                    airline.setAirlineId(
+                            rs.getInt("airline_id")
+                    );
+
+                    airline.setIata(
+                            rs.getString("iata")
+                    );
+
+                    airline.setAirlineName(
+                            rs.getString("airlinename")
+                    );
+
+                    airline.setBaseAirport(
+                            rs.getString("base_airport")
+                    );
+
+                    airplane.setAirline(airline);
+                }
+
+                // Datos del tipo de avión
                 AirplaneType airplaneType = new AirplaneType();
-                airplaneType.setTypeId(rs.getInt("type_id"));
-                airplaneType.setIdentifier(rs.getString("identifier"));
-                airplaneType.setDescription(rs.getString("description"));
-                airplane.setAirplaneType(airplaneType);
-            }
-           
-            map.put(airplaneId,airplane);
 
-           } //if
-           
-           
-       
-        }//while
-        return new ArrayList<Airplane>(map.values());
+                airplaneType.setTypeId(
+                        rs.getInt("type_id")
+                );
+
+                airplaneType.setIdentifier(
+                        rs.getString("identifier")
+                );
+
+                airplaneType.setDescription(
+                        rs.getString("description")
+                );
+
+                airplane.setAirplaneType(airplaneType);
+
+                map.put(airplaneId, airplane);
+            }
+        }
+
+        return new ArrayList<>(map.values());
     }
-    
 }

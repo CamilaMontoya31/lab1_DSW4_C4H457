@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTP-8">
     <title> Tipos de Aviones </title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 
 <body>
@@ -20,14 +20,12 @@
                </tr> 
              </thead>
             
-            <tr th:each="airplaneType : ${airplanesTypes}">
-                <td><span th:text="${airplaneType.airplaneId}"></span><a href="/mostrar_aviones">Texto del enlace</a></td>
-                <td><span th:text="${airplaneType.identifier}"></span></td>
-                <td><span th:text="${airplaneType.description}"></span></td>
-               
-            </tr>
+            <tr th:each="airplaneType : ${airplanesTypes}"> 
+            <td th:text="${airplaneType.typeId}"> ID </td>
+            <td th:text="${airplaneType.identifier}"> Identificador </td>
+            <td th:text="${airplaneType.description}"> Descripción </td>
+            <td> <a th:href="@{/mostrar_aviones(idTipo=${airplaneType.typeId})}"> Ver aviones </a> </td> </tr>
         </table>
-        <a href="/mostrar_aviones">Ir a lista de aviones</a>
     </div>
 </body>
 

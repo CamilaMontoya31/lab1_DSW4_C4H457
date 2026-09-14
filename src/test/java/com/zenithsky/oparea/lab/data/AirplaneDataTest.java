@@ -22,7 +22,6 @@ public class AirplaneDataTest {
 
     @Autowired
     private AirplaneData airplaneData;
-
     @Test
     @DisplayName("Debe retornar la(s) aeronave(s) cuando el typeId existe en la base de datos")
     @Transactional

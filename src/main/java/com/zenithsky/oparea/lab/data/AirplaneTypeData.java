@@ -26,7 +26,7 @@ public class AirplaneTypeData {
 
    public List<AirplaneType> findAll(){
         String sqlSelect = """
-               SELECT a.type_id, a.identifier FROM airplane_type a
+               SELECT a.type_id, a.identifier, a.description FROM airplane_type a
                 """;
                 
             //esto es para pasarle el id y el identifier que es el nombre
