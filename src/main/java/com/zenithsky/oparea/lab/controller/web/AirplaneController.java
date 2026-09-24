@@ -40,7 +40,7 @@ public class AirplaneController {
        haciendo un forward a la vista mostrar_aviones.html.
     */
    @RequestMapping(value = "/mostrar_aviones", method = RequestMethod.GET)
-    public String buscarPorTipo(Model model, @RequestParam("idTipo") int idTipo){
+    public String buscarPorTipo(Model model, @RequestParam int idTipo){
         List<Airplane> aviones = airplaneBusiness.getAirplaneByType(idTipo);
         model.addAttribute("aviones", aviones);
         model.addAttribute("tipoSeleccionado", idTipo);
